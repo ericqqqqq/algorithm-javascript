@@ -181,21 +181,45 @@ class BST {
   foreach(cb) {
     let q = [];
 
-    q = this.iterate(this.root, q);
+    q = this.preOrderTraversal(this.root, q);
     q.forEach((i) => cb(i));
 
     return q;
     //O(N)
   }
 
-  iterate(node, queue) {
+  inOrderTraversal(node, queue) {
     if (node === undefined) return queue;
 
     let q = queue;
 
-    q = this.iterate(node.left, q);
+    q = this.inOrderTraversal(node.left, q);
     q.push(node);
-    q = this.iterate(node.right, q);
+    q = this.inOrderTraversal(node.right, q);
+
+    return q;
+  }
+
+  preOrderTraversal(node, queue) {
+    if (node === undefined) return queue;
+
+    let q = queue;
+
+    q.push(node);
+    q = this.preOrderTraversal(node.left, q);
+    q = this.preOrderTraversal(node.right, q);
+
+    return q;
+  }
+
+  postOrderTraversal(node, queue) {
+    if (node === undefined) return queue;
+
+    let q = queue;
+
+    q = this.preOrderTraversal(node.left, q);
+    q = this.preOrderTraversal(node.right, q);
+    q.push(node);
 
     return q;
   }
@@ -284,7 +308,9 @@ function BSTTest() {
   forEach
   --------------------------------------------*/
   const startIterate = new Date().getTime();
-  bst.foreach((i) => {});
+  bst.foreach((i) => {
+    console.log(i.value);
+  });
   const endIterate = new Date().getTime();
 
   console.log(`iterate ${sz} items finished: `, endIterate - startIterate);
@@ -308,5 +334,5 @@ function BSTTest() {
   }
 }
 
-// BSTTest();
+BSTTest();
 module.exports = BST;

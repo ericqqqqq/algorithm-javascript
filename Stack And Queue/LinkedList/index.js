@@ -58,7 +58,7 @@ class LinkedList {
     this.first = target.next;
   }
 
-  get() {
+  printInString() {
     let current = this.first;
     if (!current) {
       return "[]";
@@ -77,6 +77,10 @@ class LinkedList {
     result += "]";
 
     return result;
+  }
+
+  get() {
+    return this.first;
   }
 }
 
